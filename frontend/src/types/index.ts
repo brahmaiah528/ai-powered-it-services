@@ -1,4 +1,4 @@
-export type UserRole = 'End User' | 'Service Desk Agent' | 'IT Manager' | 'Administrator';
+export type UserRole = 'End User' | 'Service Desk Agent' | 'IT Manager' | 'Administrator' | 'SRE Lead' | 'CAB Approver' | 'Department Manager';
 export type IncidentPriority = 'P1' | 'P2' | 'P3' | 'P4';
 export type IncidentStatus = 'New' | 'Assigned' | 'In Progress' | 'Pending' | 'Resolved' | 'Closed';
 export type ServiceRequestStatus = 'Submitted' | 'Pending Approval' | 'Approved' | 'Rejected' | 'In Progress' | 'Completed' | 'Cancelled';

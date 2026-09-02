@@ -24,12 +24,16 @@ interface SidebarProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
   onOpenSimulation: () => void;
+  onOpenProfile?: () => void;
+  onOpenLogin?: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
   currentTab,
   onSelectTab,
   onOpenSimulation,
+  onOpenProfile,
+  onOpenLogin,
 }) => {
   const { user, logout, switchRole } = useAuth();
   const { unreadCount } = useNotifications();
@@ -131,7 +135,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         <div className="flex items-center justify-between pt-1">
-          <div className="flex items-center gap-2 overflow-hidden">
+          <div
+            onClick={onOpenProfile}
+            className="flex items-center gap-2 overflow-hidden cursor-pointer hover:opacity-80 transition flex-1"
+            title="Click to view full Profile Info & Permissions"
+          >
             <div className="w-7 h-7 rounded-full bg-brand-500/20 border border-brand-500/40 flex items-center justify-center text-brand-300 font-bold text-xs shrink-0">
               {user?.full_name ? user.full_name.charAt(0) : 'A'}
             </div>
@@ -141,8 +149,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
           <button
-            onClick={logout}
-            title="Logout"
+            onClick={() => {
+              logout();
+              if (onOpenLogin) onOpenLogin();
+            }}
+            title="Logout / Switch User"
             className="text-slate-400 hover:text-red-400 p-1 rounded hover:bg-slate-800 transition"
           >
             <LogOut className="w-4 h-4" />

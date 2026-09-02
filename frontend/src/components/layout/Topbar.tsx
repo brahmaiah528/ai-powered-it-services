@@ -10,6 +10,8 @@ interface TopbarProps {
   onOpenNewIncident: () => void;
   onOpenNewRequest: () => void;
   onNavigateTab: (tab: string) => void;
+  onOpenProfile?: () => void;
+  onOpenLogin?: () => void;
 }
 
 export const Topbar: React.FC<TopbarProps> = ({
@@ -18,6 +20,8 @@ export const Topbar: React.FC<TopbarProps> = ({
   onOpenNewIncident,
   onOpenNewRequest,
   onNavigateTab,
+  onOpenProfile,
+  onOpenLogin,
 }) => {
   const { user, switchRole } = useAuth();
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
@@ -189,6 +193,22 @@ export const Topbar: React.FC<TopbarProps> = ({
             </div>
           )}
         </div>
+
+        {/* User Profile Avatar Button */}
+        {onOpenProfile && (
+          <button
+            onClick={onOpenProfile}
+            className="flex items-center gap-2 p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 transition"
+            title="View Profile Info & RBAC Permissions"
+          >
+            <div className="w-6 h-6 rounded-full bg-brand-500/20 border border-brand-500/50 flex items-center justify-center text-brand-300 font-bold text-xs">
+              {user?.full_name ? user.full_name.charAt(0) : 'U'}
+            </div>
+            <span className="hidden sm:inline text-xs font-medium text-slate-300 pr-1">
+              Profile
+            </span>
+          </button>
+        )}
       </div>
     </header>
   );

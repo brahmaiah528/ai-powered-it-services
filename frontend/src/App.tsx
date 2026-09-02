@@ -3,6 +3,8 @@ import { useAuth } from './context/AuthContext';
 import { Sidebar } from './components/layout/Sidebar';
 import { Topbar } from './components/layout/Topbar';
 import { ScenarioSimulationModal } from './components/simulation/ScenarioSimulationModal';
+import { LoginModal } from './components/auth/LoginModal';
+import { ProfileModal } from './components/profile/ProfileModal';
 
 // Pages
 import { Dashboard } from './pages/Dashboard';
@@ -29,6 +31,8 @@ export const App: React.FC = () => {
   const [isScenarioOpen, setIsScenarioOpen] = useState<boolean>(false);
   const [isNewIncidentOpen, setIsNewIncidentOpen] = useState<boolean>(false);
   const [isNewRequestOpen, setIsNewRequestOpen] = useState<boolean>(false);
+  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false);
 
   if (isLoading) {
     return (
@@ -58,6 +62,8 @@ export const App: React.FC = () => {
         currentTab={currentTab}
         onSelectTab={handleSelectTab}
         onOpenSimulation={() => setIsScenarioOpen(true)}
+        onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenLogin={() => setIsLoginOpen(true)}
       />
 
       {/* Main Content Area */}
@@ -76,6 +82,8 @@ export const App: React.FC = () => {
             setIsNewRequestOpen(true);
           }}
           onNavigateTab={handleSelectTab}
+          onOpenProfile={() => setIsProfileOpen(true)}
+          onOpenLogin={() => setIsLoginOpen(true)}
         />
 
         {/* Page Content */}
@@ -140,6 +148,22 @@ export const App: React.FC = () => {
         onClose={() => setIsScenarioOpen(false)}
         onScenarioCompleted={() => {
           // Trigger refresh if needed
+        }}
+      />
+
+      {/* Interactive Login Portal Modal */}
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+      />
+
+      {/* User Profile & Permissions Modal */}
+      <ProfileModal
+        isOpen={isProfileOpen}
+        onClose={() => setIsProfileOpen(false)}
+        onOpenLogin={() => {
+          setIsProfileOpen(false);
+          setIsLoginOpen(true);
         }}
       />
     </div>
